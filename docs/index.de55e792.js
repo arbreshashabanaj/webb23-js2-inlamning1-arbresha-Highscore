@@ -1,0 +1,9 @@
+var e,n,t=0,o=0,r="",c="Spelare",i=["rock","paper","scissors"],s=[];function d(){e=this.id,document.getElementById("your-choice").src=e+".png",n=i[Math.floor(3*Math.random())],document.getElementById("opponent-choice").src=n+".png",e==n||("rock"==e?"scissors"==n?t+=1:"paper"==n&&(o+=1,r="p\xe5se",1===o&&m()):"scissors"==e?"paper"==n?t+=1:"rock"==n&&(o+=1,r="sten",1===o&&m()):"paper"==e&&("rock"==n?t+=1:"scissors"==n&&(o+=1,r="sax",1===o&&m()))),document.getElementById("your-score").innerText=t,document.getElementById("opponent-score").innerText=o,document.getElementById("opponent-choice-text").innerText=r,5===o?(winnerName=`Tyv\xe4rr, Dator vann spelet!`,document.getElementById("winner").innerText="Vinnare: "+winnerName):5===t&&(winnerName=`Grattis, ${c}! Du vann!`,document.getElementById("winner").innerText="Vinnare: "+winnerName,// Lägg till highscore här
+s.push({name:c,score:t}),// Sortera highscore-listan i fallande ordning baserat på poäng
+s.sort((e,n)=>n.score-e.score),// Begränsa listan till de fem bästa highscores
+s.splice(5),// Uppdatera highscore-listan på webbsidan
+function(){var e=document.getElementById("highscore-list");// Rensa befintliga listelement
+e.innerHTML="";// Loopa igenom highscore-listan och skapa listelement för varje spelare
+for(var n=0;n<s.length;n++){var t=document.createElement("li");t.innerText=`${s[n].name}: ${s[n].score}`,e.appendChild(t)}}//# sourceMappingURL=index.de55e792.js.map
+())}function m(){t=0,o=0,r="",document.getElementById("your-score").innerText=t,document.getElementById("opponent-score").innerText=o,document.getElementById("opponent-choice-text").innerText=r,document.getElementById("your-choice").src="",document.getElementById("opponent-choice").src=""}window.onload=function(){for(let e=0;e<3;e++){let n=document.createElement("img");n.id=i[e],n.src=i[e]+".png",n.addEventListener("click",d),document.getElementById("choices").append(n)}};
+//# sourceMappingURL=index.de55e792.js.map
