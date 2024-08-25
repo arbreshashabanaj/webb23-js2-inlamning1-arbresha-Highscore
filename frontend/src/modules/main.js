@@ -1,5 +1,3 @@
-
-
 var you;
 var yourScore = 0;
 var opponent;
@@ -18,7 +16,7 @@ function updatePlayerList() {
 
 
 function fetchHighscores() {
-  fetch('http://localhost:3000/api/highscores')
+  fetch('/api/highscores')
     .then((response) => response.json())
     .then((data) => {
       
@@ -137,7 +135,7 @@ function selectChoice() {
 };
 
 
-fetch('http://localhost:3000/api/highscores', {
+fetch('/api/highscores', {
   method: 'POST',
   headers: {
     'Content-Type': 'application/json',

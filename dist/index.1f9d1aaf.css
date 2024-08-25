@@ -1,0 +1,64 @@
+body {
+  text-align: center;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+#opponent-choice {
+  background-color: #0711d1;
+  width: 240px;
+  height: 240px;
+  margin-top: 10px;
+}
+
+#your-choice {
+  background-color: #e464e4;
+  width: 240px;
+  height: 240px;
+  margin-top: 10px;
+}
+
+#choices {
+  background-color: #8a2be2;
+  width: 240px;
+  height: 80px;
+  margin: 10px auto 0;
+}
+
+#choices img {
+  width: 75px;
+  height: 80px;
+}
+
+#player-name {
+  text-align: center;
+  background-color: #f18af1;
+  margin-top: 10px;
+  font-size: 50px;
+  font-weight: bold;
+}
+
+#result {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 24px;
+}
+
+#highscore-container {
+  text-align: center;
+  background-color: #f0a9f5;
+  border-radius: 5px;
+  margin-bottom: 20px;
+  padding: 10px;
+}
+
+#highscore-container h2 {
+  margin-bottom: 10px;
+  font-size: 20px;
+}
+
+#highscore-list {
+  padding-left: 0;
+  list-style-type: decimal;
+}
+
+/*# sourceMappingURL=index.1f9d1aaf.css.map */

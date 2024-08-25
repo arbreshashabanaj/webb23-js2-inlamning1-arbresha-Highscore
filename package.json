@@ -1,12 +1,14 @@
 {
-  "devDependencies": {
-    "@parcel/resolver-default": "^2.10.0",
-    "@parcel/transformer-html": "^2.10.0",
-    "del-cli": "^5.1.0",
-    "parcel": "^2.10.0"
-  },
-  "name": "js2",
+  "name": "frontend",
   "version": "1.0.0",
+  "description": "Frontend for the application",
+  "scripts": {
+    "dev": "parcel ./src/modules/index.html",
+    "build": "parcel build ./src/modules/index.html --dist-dir docs --public-url ./",
+    "clean": "del-cli ./.parcel-cache ./docs ./dist"
+  },
+  "author": "",
+  "license": "ISC",
   "dependencies": {
     "abortcontroller-polyfill": "^1.7.5",
     "ansi-styles": "^4.3.0",
@@ -19,7 +21,6 @@
     "clone": "^2.1.2",
     "color-convert": "^2.0.1",
     "color-name": "^1.1.4",
-    "cors": "^2.8.5",
     "detect-libc": "^1.0.3",
     "dom-serializer": "^1.4.1",
     "domelementtype": "^2.3.0",
@@ -30,7 +31,6 @@
     "electron-to-chromium": "^1.4.549",
     "entities": "^3.0.1",
     "escalade": "^3.1.1",
-    "express": "^4.18.2",
     "fill-range": "^7.0.1",
     "has-flag": "^4.0.0",
     "htmlparser2": "^7.2.0",
@@ -47,7 +47,6 @@
     "node-addon-api": "^7.0.0",
     "node-gyp-build-optional-packages": "^5.1.1",
     "node-releases": "^2.0.13",
-    "nodemon": "^3.0.1",
     "nullthrows": "^1.1.1",
     "ordered-binary": "^1.4.1",
     "picocolors": "^1.0.0",
@@ -65,14 +64,10 @@
     "weak-lru-cache": "^1.2.2",
     "yallist": "^4.0.0"
   },
-  "scripts": {
-    "start": "nodemon ./backend/data/index.js",
-    "dev": "parcel ./frontend/src/modules/index.html",
-    "build": "parcel build ./frontend/src/modules/index.html --dist-dir docs --public-url ./",
-    "clean": "del-cli ./.parcel-cache ./docs ./dist"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "description": ""
+  "devDependencies": {
+    "@parcel/resolver-default": "^2.10.0",
+    "@parcel/transformer-html": "^2.10.0",
+    "del-cli": "^5.1.0",
+    "parcel": "^2.10.0"
+  }
 }
