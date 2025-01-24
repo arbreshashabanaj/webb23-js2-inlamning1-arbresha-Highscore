@@ -1,0 +1,24 @@
+{
+  "name": "backend",
+  "version": "1.0.0",
+  "description": "Backend server for the application",
+  "main": "./data/index.js",
+  "scripts": {
+    "start": "nodemon ./data/index.js",
+    "clean": "del-cli ./.parcel-cache ./docs ./dist"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.2",
+    "nodemon": "^3.0.1",
+    "underscore": "^1.13.6"
+  },
+  "devDependencies": {
+    "del-cli": "^5.1.0"
+  }
+}
+
+ 
+
