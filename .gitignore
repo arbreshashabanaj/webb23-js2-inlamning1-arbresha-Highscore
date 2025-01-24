@@ -1,2 +1,9 @@
-node_modules
-package-lock.json
+# Ignorera node_modules
+node_modules/
+
+# Ignorera Parcel-cache och dist-mapp
+.parcel-cache/
+dist/
+
+# Ignorera eventuella miljövariabler
+.env

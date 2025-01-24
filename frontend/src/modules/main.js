@@ -1,3 +1,7 @@
+import rock from './rock.png';
+import paper from './paper.png';
+import scissors from './scissors.png';
+
 var you;
 var yourScore = 0;
 var opponent;
@@ -7,28 +11,25 @@ var playerName = "";
 var opponentName = "Dator";
 var playerScore = 0;
 var choices = ["rock", "paper", "scissors"];
-const playerName_span = document.getElementById('playerList');
+var choicesIMG = [rock, paper, scissors];
+const imageMap = { rock, paper, scissors };
 
 function updatePlayerList() {
+  const playerName_span = document.getElementById('playerList');
   playerName_span.textContent = `Spelare: ${playerName} | Poäng: ${playerScore}`;
 }
 
-
-
 function fetchHighscores() {
-  fetch('/api/highscores')
+  fetch('http://localhost:3000/api/highscores')
     .then((response) => response.json())
     .then((data) => {
-      
-      console.log(data); 
-
-displayHighscores(data);
+      console.log(data);
+      displayHighscores(data);
     })
     .catch((error) => {
       console.error('Något gick fel vid hämtning av highscore-data: ' + error);
     });
 }
-
 
 function displayHighscores(highscores) {
   const highscoreList = document.getElementById("highscore-list");
@@ -41,32 +42,34 @@ function displayHighscores(highscores) {
   }
 }
 
-
-
 document.addEventListener("DOMContentLoaded", function () {
   console.log('DOMContentLoaded event triggered');
-  console.log('Min kod körs');
+
+  
+  const choicesContainer = document.getElementById("choices");
+  if (!choicesContainer) {
+    console.error("Choices container not found in DOM!");
+    return;
+  }
 
   for (let i = 0; i < choices.length; i++) {
     let choice = document.createElement("img");
     choice.id = choices[i];
-    choice.src = choices[i] + ".png";
+    choice.src = choicesIMG[i];
+    choice.style.cursor = "pointer";
     choice.addEventListener("click", selectChoice);
-    document.getElementById("choices").append(choice);
+    choicesContainer.append(choice);
   }
 
+  
   var playButton = document.getElementById("play-button");
   playButton.addEventListener("click", function () {
     console.log('Spela-knappen klickad');
     startGame();
   });
 
- 
   fetchHighscores();
-
 });
-
-
 
 function startGame() {
   setPlayerName();
@@ -76,97 +79,69 @@ function startGame() {
 
 function selectChoice() {
   you = this.id;
-  console.log('Spelaren valde: ' + you);
-  document.getElementById("your-choice").src = you + ".png";
-
-  opponent = choices[Math.floor(Math.random() * 3)];
-  document.getElementById("opponent-choice").src = opponent + ".png";
+  console.log('Spelaren valde:', you);
 
   
-  setTimeout(function () {
-    document.getElementById("opponent-choice-text").innerText = `Dator valde: ${opponent}`;
-  }, 1000);
+  document.getElementById("your-choice").src = imageMap[you];
+
+  
+  opponent = choices[Math.floor(Math.random() * 3)];
+  document.getElementById("opponent-choice").src = imageMap[opponent];
+  document.getElementById("opponent-choice-text").innerText = `Dator valde: ${opponent}`;
+
  
-   if (you == opponent) {
-    
-  }  else {
-    if (you == "rock") {
-      if (opponent == "scissors") {
-        yourScore += 1;
-      } else if (opponent == "paper") {
-        opponentScore += 1;
-        opponentChoiceText = "påse";
-        if (opponentScore === 1) {
-         
-          setTimeout(resetGame, 2000);
-        }
-      }
-    } else if (you == "scissors") {
-      if (opponent == "paper") {
-        yourScore += 1;
-      } else if (opponent == "rock") {
-        opponentScore += 1;
-        opponentChoiceText = "sten";
-        if (opponentScore === 1) {
-         
-          setTimeout(resetGame, 2000);
-        }
-      }
-    } else if (you == "paper") {
-      if (opponent == "rock") {
-        yourScore += 1;
-      } else if (opponent == "scissors") {
-        opponentScore += 1;
-        opponentChoiceText = "sax";
-        
-        if (opponentScore === 1) {
-          
-          setTimeout(resetGame, 2000);
-        }
-      } 
-      
-
-    }
-  }  
-
- const newHighscore = {
-  name: playerName,
-  score: yourScore,
-};
-
-
-fetch('/api/highscores', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify(newHighscore), 
-})
-  .then((response) => {
-    if (response.status === 200) {
-      
-      console.log('Highscore sparad.');
-      
-      fetchHighscores();
-    } else {
-      console.error('Något gick fel när highscore skulle sparas.');
-    }
-  })
-  .catch((error) => {
-    console.error('Något gick fel vid kommunikation med servern: ' + error);
-  });
-
-
-
-
+  if (you === opponent) {
+    console.log('Oavgjort!');
+  } else if (
+    (you === "rock" && opponent === "scissors") ||
+    (you === "paper" && opponent === "rock") ||
+    (you === "scissors" && opponent === "paper")
+  ) {
+    yourScore++;
+    console.log('Spelaren vinner!');
+  } else {
+    opponentScore++;
+    console.log('Datorn vinner!');
+    setTimeout(resetGame, 2000);  
+  }
 
   document.getElementById("your-score").innerText = yourScore;
+  document.getElementById("opponent-score").innerText = opponentScore;
+
+  
+  saveHighscore();
+}
+
+function saveHighscore() {
+  const newHighscore = {
+    name: playerName,
+    score: yourScore,
+  };
+
+  fetch('http://localhost:3000/api/highscores', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify(newHighscore),
+  })
+    .then((response) => {
+      if (response.status === 200) {
+        console.log('Highscore sparad.');
+        fetchHighscores(); 
+      } else {
+        console.error('Något gick fel när highscore skulle sparas.');
+      }
+    })
+    .catch((error) => {
+      console.error('Något gick fel vid kommunikation med servern: ' + error);
+    });
 }
 
 function setPlayerName() {
   var inputElement = document.getElementById("name-input");
   playerName = inputElement.value;
-  console.log('Spelarens namn är satt till: ' + playerName);
+  console.log('Spelarens namn är satt till:', playerName);
   var playerNameDisplay = document.getElementById("player-name-display");
   playerNameDisplay.innerText = "Spelare: " + playerName;
   updatePlayerList();
